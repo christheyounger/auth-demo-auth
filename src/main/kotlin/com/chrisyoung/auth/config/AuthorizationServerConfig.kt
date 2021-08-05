@@ -23,7 +23,6 @@ class AuthorizationServerConfig(
     ) {
         oauthServer.tokenKeyAccess("permitAll()")
             .checkTokenAccess("isAuthenticated()")
-            .allowFormAuthenticationForClients()
     }
 
     @Throws(Exception::class)
