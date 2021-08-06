@@ -51,7 +51,7 @@ class UsersControllerTests(
     fun getHeaders(): HttpHeaders {
         val headers = HttpHeaders()
         val jwt = jwtService.createAccessToken(
-            Client("test client", "secret", "redirect url"),
+            Client("client", "test client", "secret", "redirect url"),
             User("test@test.com", "0412345678", "test", "user", "password")
         )
         headers.setBearerAuth(jwt);

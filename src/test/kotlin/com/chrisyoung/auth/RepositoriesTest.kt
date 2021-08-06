@@ -22,7 +22,7 @@ class RepositoriesTest @Autowired constructor(
     }
     @Test
     fun `When findByCode then return code`() {
-        val client = Client("client", "secret", "redirect")
+        val client = Client("client", "test client", "secret", "redirect")
         val user = User("test2@test.com", "0412345679", "test", "two", "password")
         val code = Code("1234", client, user)
         entityManager.persist(code)
