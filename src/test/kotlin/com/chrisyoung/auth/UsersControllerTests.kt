@@ -1,5 +1,7 @@
 package com.chrisyoung.auth
 
+import com.chrisyoung.auth.controller.UserCreateBody
+import com.chrisyoung.auth.service.JwtService
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -49,7 +51,7 @@ class UsersControllerTests(
     fun getHeaders(): HttpHeaders {
         val headers = HttpHeaders()
         val jwt = jwtService.createAccessToken(
-            Client("test client", "secret", "redirect url"),
+            Client("client", "test client", "secret", "redirect url"),
             User("test@test.com", "0412345678", "test", "user", "password")
         )
         headers.setBearerAuth(jwt);

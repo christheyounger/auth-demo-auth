@@ -6,10 +6,6 @@ interface UserRepository : CrudRepository<User, Long> {
     fun findByEmail(email: String): User?
 }
 
-interface ClientRepository : CrudRepository<Client, Long> {
+interface ClientRepository : CrudRepository<Client, String> {
 
-}
-
-interface CodeRepository: CrudRepository<Code, Long> {
-    fun findByCode(code: String): Code?
 }

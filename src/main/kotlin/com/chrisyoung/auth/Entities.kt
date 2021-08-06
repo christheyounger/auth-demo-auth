@@ -16,10 +16,12 @@ class User(
 
 @Entity
 class Client(
+        @Id val id: String,
         val name: String,
         val secret: String,
         val redirectUrl: String,
-        @Id @GeneratedValue val id: Long? = null)
+        val secretRequired: Boolean = true,
+        val autoApprove: Boolean = false)
 
 @Entity
 class Code(
