@@ -9,7 +9,3 @@ interface UserRepository : CrudRepository<User, Long> {
 interface ClientRepository : CrudRepository<Client, String> {
 
 }
-
-interface CodeRepository: CrudRepository<Code, Long> {
-    fun findByCode(code: String): Code?
-}
