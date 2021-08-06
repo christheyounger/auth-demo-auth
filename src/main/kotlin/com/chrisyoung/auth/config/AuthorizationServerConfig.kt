@@ -1,5 +1,6 @@
 package com.chrisyoung.auth.config
 
+import com.chrisyoung.auth.service.ClientUserDetailsService
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer
@@ -10,7 +11,8 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 @EnableAuthorizationServer()
 @Configuration(proxyBeanMethods = false)
 class AuthorizationServerConfig(
-    private val passwordEncoder: BCryptPasswordEncoder
+    private val passwordEncoder: BCryptPasswordEncoder,
+    val clientUserDetailsService: ClientUserDetailsService
 ): AuthorizationServerConfigurerAdapter() {
 
     private val clientID = "auth-frontend"
@@ -27,12 +29,6 @@ class AuthorizationServerConfig(
 
     @Throws(Exception::class)
     override fun configure(clients: ClientDetailsServiceConfigurer) {
-        clients.inMemory()
-            .withClient(clientID)
-            .secret(passwordEncoder.encode(clientSecret))
-            .authorizedGrantTypes("authorization_code")
-            .scopes("user_info")
-            .autoApprove(true)
-            .redirectUris(redirectURLs)
+        clients.withClientDetails(clientUserDetailsService)
     }
 }
