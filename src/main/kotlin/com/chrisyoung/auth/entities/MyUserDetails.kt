@@ -1,5 +1,6 @@
-package com.chrisyoung.auth
+package com.chrisyoung.auth.entities
 
+import com.chrisyoung.auth.entities.User
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails

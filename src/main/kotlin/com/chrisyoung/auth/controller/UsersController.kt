@@ -1,6 +1,6 @@
 package com.chrisyoung.auth.controller
 
-import com.chrisyoung.auth.User
+import com.chrisyoung.auth.entities.User
 import com.chrisyoung.auth.UserRepository
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

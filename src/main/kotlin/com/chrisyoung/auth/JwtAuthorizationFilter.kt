@@ -19,7 +19,7 @@ class JwtAuthorizationFilter(private val jwtService: JwtService) : OncePerReques
     private fun getToken(request: HttpServletRequest): String?
     {
         return request.getHeader("Authorization")?.also {
-            return if (it.contains("bearer")) {
+            return if (it.contains("Bearer")) {
                 it.extractToken()
             } else {
                 null;

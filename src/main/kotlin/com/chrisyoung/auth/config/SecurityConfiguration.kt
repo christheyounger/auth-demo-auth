@@ -6,41 +6,54 @@ import com.chrisyoung.auth.service.UserDetailsService
 import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Import
 import org.springframework.core.Ordered
 import org.springframework.core.annotation.Order
+import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+import org.springframework.security.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
-import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer.ExpressionInterceptUrlRegistry
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
+import org.springframework.security.crypto.keys.KeyManager
+import org.springframework.security.crypto.keys.StaticKeyGeneratingKeyManager
+import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import org.springframework.web.filter.CorsFilter
 
 
 @Configuration
-@EnableWebSecurity()
+@EnableWebSecurity(debug = true)
+@Import(OAuth2AuthorizationServerConfiguration::class)
 @Order(-1)
 class SecurityConfiguration(
     val userDetailsService: UserDetailsService,
-    val passwordEncoder: BCryptPasswordEncoder
+    val passwordEncoder: PasswordEncoder
 ): WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity) {
         http.requestMatchers()
-            .antMatchers("/login", "/oauth/authorize")
+            .antMatchers("/login", "/oauth/authorize", "/users")
             .and()
             .authorizeRequests()
+            .antMatchers(HttpMethod.GET, "/users","/users/**").hasAuthority("SCOPE_read")
             .anyRequest().authenticated()
             .and()
             .formLogin()
+            .and()
+            .addFilterBefore(JwtAuthorizationFilter(JwtService()), UsernamePasswordAuthenticationFilter::class.java)
         http.cors()
     }
 
     override fun configure(auth: AuthenticationManagerBuilder) {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder)
+    }
+
+    @Bean
+    fun keyManager(): KeyManager? {
+        return StaticKeyGeneratingKeyManager()
     }
 
     @Bean
