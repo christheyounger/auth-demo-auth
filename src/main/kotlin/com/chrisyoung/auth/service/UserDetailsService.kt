@@ -1,6 +1,6 @@
 package com.chrisyoung.auth.service
 
-import com.chrisyoung.auth.MyUserDetails
+import com.chrisyoung.auth.entities.MyUserDetails
 import com.chrisyoung.auth.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.userdetails.UserDetails

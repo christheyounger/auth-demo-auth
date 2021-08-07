@@ -1,4 +1,4 @@
-package com.chrisyoung.auth
+package com.chrisyoung.auth.entities
 
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
