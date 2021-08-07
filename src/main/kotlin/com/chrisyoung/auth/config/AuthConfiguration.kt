@@ -18,10 +18,10 @@ class AuthConfiguration {
         clientRepository: ClientRepository
     ) = ApplicationRunner {
         userRepository.save(User("test@test.com", "0412345678", "Test", "User", passwordEncoder().encode("password")))
-        clientRepository.save(Client("auth-frontend", "Website", passwordEncoder().encode("secret"), "http://localhost:3000/login"))
+        clientRepository.save(Client("auth-frontend", "Website", "secret", "http://localhost:3000/login"))
     }
     @Bean
     fun passwordEncoder(): PasswordEncoder {
-        return NoOpPasswordEncoder.getInstance()
+        return BCryptPasswordEncoder()
     }
 }

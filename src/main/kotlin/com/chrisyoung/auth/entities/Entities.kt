@@ -21,7 +21,9 @@ class Client(
         val secret: String,
         val redirectUrl: String,
         val secretRequired: Boolean = true,
-        val autoApprove: Boolean = false)
+        val autoApprove: Boolean = false,
+        val accessTokenLifeMinutes: Long = 15,
+        val refreshTokenLifeDays: Long = 1)
 
 @Entity
 class Code(
